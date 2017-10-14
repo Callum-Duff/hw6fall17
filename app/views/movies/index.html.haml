@@ -25,4 +25,9 @@
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
+= form_tag movies_search_tmdb_path, :method => :post, :id => 'search_form' do
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title'
+  = submit_tag 'search TMDb', :id => 'search_submit'
+
 = link_to 'Add new movie', new_movie_path
