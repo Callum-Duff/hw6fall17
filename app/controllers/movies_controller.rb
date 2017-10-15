@@ -63,12 +63,12 @@ class MoviesController < ApplicationController
   
   def search_tmdb
     # Check if search term is valid. If not, add flash message.
-    if params[:search_terms] == nil or params[:search_terms]["search_terms"] == ''
+    if params[:search_terms] == nil or params[:search_terms] == ''
       flash[:warning] = 'Invalid search term'
       redirect_to movies_path
     else
       # Instance methods used by the view
-      @search=params[:search_terms]["search_terms"]
+      @search=params[:search_terms]
       @movies=Movie.find_in_tmdb(@search)
       if @movies.empty?
         flash[:warning] = 'No matching movies were found on TMDb'
@@ -77,4 +77,14 @@ class MoviesController < ApplicationController
     end
   end
 
+  def add_tmdb 
+    checked_boxes = params[:tmdb_movies]
+    if checked_boxes.blank?
+      flash[:warning] = 'No movies selected'
+    else
+      #flash[:warning] = checked_boxes.keys
+      Movie.create_from_tmdb(checked_boxes.keys)
+    end
+    redirect_to movies_path
+  end
 end

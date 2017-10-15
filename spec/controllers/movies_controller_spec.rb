@@ -45,4 +45,23 @@ describe MoviesController do
     end
     
   end
+  
+  describe 'adding a list of checked movies from search results' do
+    context 'when no boxes are checked' do
+      it 'should set a flash message alerting that no options were selected' do
+        expect(false).to be_truthy
+      end
+    end
+    context 'when boxes are checked' do
+      it 'should receive a hash of checked movies from the post request' do
+        expect(false).to be_truthy
+      end
+      
+      it 'should send a list of TMDb IDs to the model method create_from_tmdb' do
+        expect(false).to be_truthy
+      end
+    end
+    
+    
+  end
 end
