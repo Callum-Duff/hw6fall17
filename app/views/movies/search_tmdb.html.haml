@@ -1,1 +1,18 @@
-I am in the search tmdb html
+%h1 The following movies containing "#{@search}" were found on TMDb
+
+%table#movies
+  %thead
+    %tr
+      %th Movie Title
+      %th Rating
+      %th Release Date
+      %th Select
+  %tbody
+    - @movies.each do |movie|
+      %tr
+        %td= movie[:title] 
+        %td= movie[:rating]
+        %td= movie[:release_date]
+        <!--%td=check_box_tag "tmdb_movies[#{movie[:tmdb_id]}]"-->
+
+= link_to 'Return to Movie List', movies_path
