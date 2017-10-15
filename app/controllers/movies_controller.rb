@@ -79,6 +79,7 @@ class MoviesController < ApplicationController
 
   def add_tmdb 
     checked_boxes = params[:tmdb_movies]
+    flash[:warning] = 'No movies selected'
     if checked_boxes.blank?
       flash[:warning] = 'No movies selected'
     else

@@ -4,14 +4,7 @@ class Movie < ActiveRecord::Base
   end
   
 class Movie::InvalidKeyError < StandardError ; end
-  
-#  def self.find_in_tmdb(string)
-#    begin
-#      Tmdb::Movie.find(string)
-#    rescue Tmdb::InvalidApiKeyError
-#        raise Movie::InvalidKeyError, 'Invalid API key'
-#    end
-#  end
+
   def self.find_in_tmdb(search_string)
     Tmdb::Api.key("f4702b08c0ac6ea5b51425788bb26562")
     begin
@@ -65,8 +58,6 @@ class Movie::InvalidKeyError < StandardError ; end
     Tmdb::Api.key("f4702b08c0ac6ea5b51425788bb26562")
     list_of_IDs.each do |id|
       search_result = Tmdb::Movie.detail(id.to_i)
-      #puts search_result
-      #puts search_result[:title]
       movies_hash = {}
       movies_hash[:title] = search_result['title']
       
@@ -95,15 +86,9 @@ class Movie::InvalidKeyError < StandardError ; end
         movies_hash[:rating] = 'NR'
       end
       
-      
       movies_hash[:release_date] = search_result['release_date']
-      puts movies_hash
       self.create!(movies_hash)
     end
-    #search_result = Tmdb::Movie.releases(550)
-    #puts search_result.title
-    
-    
   end
   
 end

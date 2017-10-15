@@ -34,14 +34,14 @@ describe MoviesController do
       fake_results = [double('Movie1'), double('Movie2')]
       allow(Movie).to receive(:find_in_tmdb).and_return(fake_results)
       post :search_tmdb, {:search_terms => ''}
-      expect(flash[:notice]).to eq('Invalid search term')
+      expect(flash[:warning]).to eq('Invalid search term')
     end
     
     it 'should alert the user if no results were found in the search' do
       fake_results = []
       allow(Movie).to receive(:find_in_tmdb).and_return(fake_results)
       post :search_tmdb, {:search_terms => 'Test'}
-      expect(flash[:notice]).to eq('No matching movies were found on TMDb')
+      expect(flash[:warning]).to eq('No matching movies were found on TMDb')
     end
     
   end
@@ -49,16 +49,19 @@ describe MoviesController do
   describe 'adding a list of checked movies from search results' do
     context 'when no boxes are checked' do
       it 'should set a flash message alerting that no options were selected' do
-        expect(false).to be_truthy
+        post :add_tmdb, {:tmdb_movies => {}}
+        expect(flash[:warning]).to eq('No movies selected')
       end
     end
     context 'when boxes are checked' do
-      it 'should receive a hash of checked movies from the post request' do
-        expect(false).to be_truthy
+      it 'should call the Model method to add movies' do
+        expect(Movie).to receive(:create_from_tmdb).with(['550'])
+        post :add_tmdb, {:tmdb_movies => {'550' => 1}}
       end
       
       it 'should send a list of TMDb IDs to the model method create_from_tmdb' do
-        expect(false).to be_truthy
+        expect(Movie).to receive(:create_from_tmdb).with(['550', '255', '941'])
+        post :add_tmdb, {:tmdb_movies => {'550' => 1, '255' => 1, '941' => 1}}
       end
     end
     

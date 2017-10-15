@@ -9,6 +9,7 @@ describe Movie do
       
       it 'should return a non-empty array with valid search option' do
         return_val = Movie.find_in_tmdb('American Psycho')
+        # ----------------- DEBUGGING PRINT STATEMENTS ----------------------
         #return_val.each do |movie|
           #puts '--------------------------------'
           #puts "Title: #{movie[:title]}"
